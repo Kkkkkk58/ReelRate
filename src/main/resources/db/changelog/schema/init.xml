@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1701725110888-1" author="kslacker (generated)">
+        <createSequence incrementBy="50" sequenceName="actor_roles_seq" startValue="1"/>
+    </changeSet>
+    <changeSet id="1701725110888-2" author="kslacker (generated)">
+        <createSequence incrementBy="50" sequenceName="motion_pictures_seq" startValue="1"/>
+    </changeSet>
+    <changeSet id="1701725110888-3" author="kslacker (generated)">
+        <createSequence incrementBy="50" sequenceName="null_seq" startValue="1"/>
+    </changeSet>
+    <changeSet id="1701725110888-4" author="kslacker (generated)">
+        <createSequence incrementBy="50" sequenceName="people_seq" startValue="1"/>
+    </changeSet>
+    <changeSet id="1701725110888-5" author="kslacker (generated)">
+        <createSequence incrementBy="50" sequenceName="person_roles_seq" startValue="1"/>
+    </changeSet>
+    <changeSet id="1701725110888-6" author="kslacker (generated)">
+        <createSequence incrementBy="50" sequenceName="ratings_view_seq" startValue="1"/>
+    </changeSet>
+    <changeSet id="1701725110888-7" author="kslacker (generated)">
+        <createSequence incrementBy="50" sequenceName="user_ratings_seq" startValue="1"/>
+    </changeSet>
+    <changeSet id="1701725110888-8" author="kslacker (generated)">
+        <createTable tableName="actor_roles">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_actor_roles"/>
+            </column>
+            <column name="type" type="SMALLINT"/>
+            <column name="motion_picture_id" type="BIGINT"/>
+            <column name="person_id" type="BIGINT"/>
+            <column name="role" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1701725110888-9" author="kslacker (generated)">
+        <createTable tableName="motion_pictures">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_motion_pictures"/>
+            </column>
+            <column name="type" type="SMALLINT"/>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="genres" type="SMALLINT"/>
+            <column name="duration_minutes" type="INT"/>
+            <column name="release_date" type="DATE"/>
+            <column name="season" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1701725110888-10" author="kslacker (generated)">
+        <createTable tableName="people">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_people"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="nationality" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1701725110888-11" author="kslacker (generated)">
+        <createTable tableName="person_roles">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_person_roles"/>
+            </column>
+            <column name="type" type="SMALLINT"/>
+            <column name="motion_picture_id" type="BIGINT"/>
+            <column name="person_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1701725110888-12" author="kslacker (generated)">
+        <createTable tableName="ratings_view">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_ratings_view"/>
+            </column>
+            <column name="motion_picture_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="average_score" type="DOUBLE"/>
+            <column name="number_of_votes" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1701725110888-13" author="kslacker (generated)">
+        <createTable tableName="reelrate_users">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_reelrate_users"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1701725110888-14" author="kslacker (generated)">
+        <createTable tableName="user_ratings">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_user_ratings"/>
+            </column>
+            <column name="user_id" type="UUID"/>
+            <column name="motion_picture_id" type="BIGINT"/>
+            <column name="rating" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1701725110888-15" author="kslacker (generated)">
+        <createTable tableName="users_watch_later">
+            <column name="motion_picture_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_users_watch_later"/>
+            </column>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_users_watch_later"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1701725110888-16" author="kslacker (generated)">
+        <addForeignKeyConstraint baseColumnNames="motion_picture_id" baseTableName="actor_roles"
+                                 constraintName="FK_ACTOR_ROLES_ON_MOTIONPICTURE" referencedColumnNames="id"
+                                 referencedTableName="motion_pictures"/>
+    </changeSet>
+    <changeSet id="1701725110888-17" author="kslacker (generated)">
+        <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="actor_roles"
+                                 constraintName="FK_ACTOR_ROLES_ON_PERSON" referencedColumnNames="id"
+                                 referencedTableName="people"/>
+    </changeSet>
+    <changeSet id="1701725110888-18" author="kslacker (generated)">
+        <addForeignKeyConstraint baseColumnNames="motion_picture_id" baseTableName="person_roles"
+                                 constraintName="FK_PERSON_ROLES_ON_MOTIONPICTURE" referencedColumnNames="id"
+                                 referencedTableName="motion_pictures"/>
+    </changeSet>
+    <changeSet id="1701725110888-19" author="kslacker (generated)">
+        <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="person_roles"
+                                 constraintName="FK_PERSON_ROLES_ON_PERSON" referencedColumnNames="id"
+                                 referencedTableName="people"/>
+    </changeSet>
+    <changeSet id="1701725110888-20" author="kslacker (generated)">
+        <addForeignKeyConstraint baseColumnNames="motion_picture_id" baseTableName="ratings_view"
+                                 constraintName="FK_RATINGS_VIEW_ON_MOTIONPICTURE" referencedColumnNames="id"
+                                 referencedTableName="motion_pictures"/>
+    </changeSet>
+    <changeSet id="1701725110888-21" author="kslacker (generated)">
+        <addForeignKeyConstraint baseColumnNames="motion_picture_id" baseTableName="user_ratings"
+                                 constraintName="FK_USER_RATINGS_ON_MOTIONPICTURE" referencedColumnNames="id"
+                                 referencedTableName="motion_pictures"/>
+    </changeSet>
+    <changeSet id="1701725110888-22" author="kslacker (generated)">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_ratings"
+                                 constraintName="FK_USER_RATINGS_ON_USER" referencedColumnNames="id"
+                                 referencedTableName="reelrate_users"/>
+    </changeSet>
+    <changeSet id="1701725110888-23" author="kslacker (generated)">
+        <addForeignKeyConstraint baseColumnNames="motion_picture_id" baseTableName="users_watch_later"
+                                 constraintName="fk_usewatlat_on_motion_picture" referencedColumnNames="id"
+                                 referencedTableName="motion_pictures"/>
+    </changeSet>
+    <changeSet id="1701725110888-24" author="kslacker (generated)">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="users_watch_later"
+                                 constraintName="fk_usewatlat_on_reel_rate_user" referencedColumnNames="id"
+                                 referencedTableName="reelrate_users"/>
+    </changeSet>
+
+</databaseChangeLog>
