@@ -1,5 +1,6 @@
 package ru.kslacker.reelrate.dto.personrole;
 
+import io.leangen.graphql.annotations.types.GraphQLInterface;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import ru.kslacker.reelrate.dataaccess.enums.PersonRoleType;
 @ToString
 @AllArgsConstructor
 @Builder
+@GraphQLInterface(name = "PersonRoleDto", implementationAutoDiscovery = true)
 public class PersonRoleDto {
     private final Long id;
     private final PersonRoleType type;
