@@ -3,6 +3,7 @@ package ru.kslacker.reelrate.dto.motionpicture;
 import java.time.LocalDate;
 import java.util.List;
 
+import io.leangen.graphql.annotations.types.GraphQLInterface;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import ru.kslacker.reelrate.dto.personrole.PersonRoleDto;
 @ToString
 @AllArgsConstructor
 @Builder
+@GraphQLInterface(name = "MotionPictureDto", implementationAutoDiscovery = true)
 public class MotionPictureDto {
     private final Long id;
     private final MotionPictureType type;
