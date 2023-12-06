@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kslacker.reelrate.dataaccess.entities.ReelRateUser;
 import ru.kslacker.reelrate.dataaccess.entities.UserRating;
 import ru.kslacker.reelrate.dataaccess.models.Rating;
@@ -20,6 +21,7 @@ import ru.kslacker.reelrate.mapping.reelrateuser.UserRatingMapper;
 import ru.kslacker.reelrate.service.api.ReelRateUserService;
 
 @Service
+@Transactional(readOnly = true)
 public class ReelRateUserServiceImpl implements ReelRateUserService {
     private final UserRatingRepository userRatingRepository;
     private final ReelRateUserRepository reelRateUserRepository;
@@ -44,6 +46,7 @@ public class ReelRateUserServiceImpl implements ReelRateUserService {
     }
 
     @Override
+    @Transactional
     public UserRatingDto rate(UUID userId, Long motionPictureId, Rating rating) {
         UserRatingId userRatingId = new UserRatingId(userId, motionPictureId);
 

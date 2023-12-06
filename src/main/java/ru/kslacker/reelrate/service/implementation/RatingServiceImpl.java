@@ -1,6 +1,7 @@
 package ru.kslacker.reelrate.service.implementation;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kslacker.reelrate.dataaccess.entities.MotionPictureRatingView;
 import ru.kslacker.reelrate.dataaccess.repositories.MotionPictureRatingRepository;
 import ru.kslacker.reelrate.dto.motionpicture.MotionPictureRatingDto;
@@ -9,6 +10,7 @@ import ru.kslacker.reelrate.mapping.motionpicture.MotionPictureRatingMapper;
 import ru.kslacker.reelrate.service.api.RatingService;
 
 @Service
+@Transactional(readOnly = true)
 public class RatingServiceImpl implements RatingService {
     private final MotionPictureRatingRepository motionPictureRatingRepository;
 
