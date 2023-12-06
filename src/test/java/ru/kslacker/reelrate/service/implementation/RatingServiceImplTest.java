@@ -62,7 +62,6 @@ class RatingServiceImplTest {
 
     private MotionPictureRatingView getRating() {
         return new MotionPictureRatingView(
-                1L,
                 getMotionPicture(),
                 7.5,
                 42

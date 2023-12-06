@@ -26,4 +26,25 @@ public class RatingServiceImpl implements RatingService {
 
         return MotionPictureRatingMapper.map(motionPictureRating);
     }
+
+    @Override
+    @Transactional
+    public MotionPictureRatingDto updateRating(MotionPictureRatingDto motionPictureRating) {
+        MotionPictureRatingView motionPictureRatingView = motionPictureRatingRepository
+                .findByMotionPictureId(motionPictureRating.motionPictureId())
+                .orElse(getNewMotionPictureRatingView(motionPictureRating));
+
+        motionPictureRatingView.setAverageScore(motionPictureRatingView.getAverageScore());
+        motionPictureRatingView.setNumberOfVotes(motionPictureRating.numberOfVotes());
+
+        motionPictureRatingView = motionPictureRatingRepository.saveAndFlush(motionPictureRatingView);
+        return MotionPictureRatingMapper.map(motionPictureRatingView);
+    }
+
+    private MotionPictureRatingView getNewMotionPictureRatingView(MotionPictureRatingDto motionPictureRating) {
+        MotionPictureRatingView motionPictureRatingView = new MotionPictureRatingView();
+        motionPictureRatingView.setMotionPictureId(motionPictureRating.motionPictureId());
+
+        return motionPictureRatingView;
+    }
 }

@@ -9,4 +9,5 @@ import ru.kslacker.reelrate.dataaccess.models.UserRatingId;
 
 public interface UserRatingRepository extends JpaRepository<UserRating, UserRatingId> {
     List<UserRating> findAllByUserId(UUID userId);
+    List<UserRating> findAllByMotionPictureId(Long motionPictureId);
 }
