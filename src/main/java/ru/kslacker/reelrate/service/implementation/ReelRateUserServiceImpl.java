@@ -36,7 +36,10 @@ public class ReelRateUserServiceImpl implements ReelRateUserService {
 
     @Override
     public ReelRateUserDto getById(UUID userId) {
-        ReelRateUser user = reelRateUserRepository.findById(userId).orElseThrow();
+        ReelRateUser user = reelRateUserRepository
+                .findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(userId));
+
         return ReelRateUserMapper.map(user);
     }
 
