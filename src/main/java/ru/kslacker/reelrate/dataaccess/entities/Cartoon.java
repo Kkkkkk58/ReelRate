@@ -11,6 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 import ru.kslacker.reelrate.dataaccess.enums.Genre;
 import ru.kslacker.reelrate.dataaccess.enums.MotionPictureType;
+import ru.kslacker.reelrate.dataaccess.visitors.MotionPictureVisitor;
 
 @Entity
 @DiscriminatorValue(MotionPictureType.Values.CARTOON)
@@ -36,5 +37,10 @@ public class Cartoon extends MotionPicture {
                 cast,
                 durationMinutes,
                 releaseDate);
+    }
+
+    @Override
+    public void accept(MotionPictureVisitor visitor) {
+        visitor.visit(this);
     }
 }

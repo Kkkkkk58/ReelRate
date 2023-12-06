@@ -25,6 +25,7 @@ import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 import ru.kslacker.reelrate.dataaccess.enums.Genre;
 import ru.kslacker.reelrate.dataaccess.enums.MotionPictureType;
+import ru.kslacker.reelrate.dataaccess.visitors.MotionPictureVisitor;
 
 @Entity
 @Table(name = "motion_pictures")
@@ -72,6 +73,10 @@ public abstract class MotionPicture {
         this.cast = cast;
         this.durationMinutes = durationMinutes;
         this.releaseDate = releaseDate;
+    }
+
+    public void accept(MotionPictureVisitor visitor) {
+        visitor.visit(this);
     }
 
     @Override
