@@ -14,6 +14,7 @@ import ru.kslacker.reelrate.dataaccess.repositories.UserRatingRepository;
 import ru.kslacker.reelrate.dto.motionpicture.MotionPictureDto;
 import ru.kslacker.reelrate.dto.reelrateuser.ReelRateUserDto;
 import ru.kslacker.reelrate.dto.reelrateuser.UserRatingDto;
+import ru.kslacker.reelrate.exceptions.EntityNotFoundException;
 import ru.kslacker.reelrate.mapping.reelrateuser.ReelRateUserMapper;
 import ru.kslacker.reelrate.mapping.reelrateuser.UserRatingMapper;
 import ru.kslacker.reelrate.service.api.ReelRateUserService;
@@ -41,11 +42,13 @@ public class ReelRateUserServiceImpl implements ReelRateUserService {
 
     @Override
     public UserRatingDto rate(UUID userId, Long motionPictureId, Rating rating) {
+        UserRatingId userRatingId = new UserRatingId(userId, motionPictureId);
+
         if (!reelRateUserRepository.existsById(userId) || !motionPictureRepository.existsById(motionPictureId)) {
-            throw new RuntimeException();
+            throw new EntityNotFoundException(userRatingId);
         }
 
-        UserRating userRating = userRatingRepository.findById(new UserRatingId(userId, motionPictureId)).orElse(
+        UserRating userRating = userRatingRepository.findById(userRatingId).orElse(
                 new UserRating(userId, motionPictureId, rating)
         );
 
