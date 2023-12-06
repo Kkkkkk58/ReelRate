@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1701897852903-1" author="kslacker (generated)">
+        <createSequence incrementBy="50" sequenceName="accounts_seq" startValue="1"/>
+    </changeSet>
+    <changeSet id="1701897852903-2" author="kslacker (generated)">
+        <createTable tableName="accounts">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_accounts"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reelrate_user_id" type="UUID"/>
+            <column name="roles" type="VARCHAR(255) []">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1701897852903-3" author="kslacker (generated)">
+        <addUniqueConstraint columnNames="username" constraintName="uc_accounts_username" tableName="accounts"/>
+    </changeSet>
+    <changeSet id="1701897852903-4" author="kslacker (generated)">
+        <addForeignKeyConstraint baseColumnNames="reelrate_user_id" baseTableName="accounts"
+                                 constraintName="FK_ACCOUNTS_ON_REELRATE_USER" referencedColumnNames="id"
+                                 referencedTableName="reelrate_users"/>
+    </changeSet>
+
+</databaseChangeLog>
