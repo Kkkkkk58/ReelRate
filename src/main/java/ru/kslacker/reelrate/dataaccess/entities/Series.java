@@ -12,6 +12,7 @@ import lombok.Setter;
 import lombok.ToString;
 import ru.kslacker.reelrate.dataaccess.enums.Genre;
 import ru.kslacker.reelrate.dataaccess.enums.MotionPictureType;
+import ru.kslacker.reelrate.dataaccess.visitors.MotionPictureVisitor;
 
 @Entity
 @DiscriminatorValue(MotionPictureType.Values.SERIES)
@@ -42,5 +43,10 @@ public class Series extends MotionPicture {
                 durationMinutes,
                 releaseDate);
         this.season = season;
+    }
+
+    @Override
+    public void accept(MotionPictureVisitor visitor) {
+        visitor.visit(this);
     }
 }
