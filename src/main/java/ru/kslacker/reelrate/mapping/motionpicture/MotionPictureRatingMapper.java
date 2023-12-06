@@ -6,7 +6,7 @@ import ru.kslacker.reelrate.dto.motionpicture.MotionPictureRatingDto;
 public class MotionPictureRatingMapper {
     public static MotionPictureRatingDto map(MotionPictureRatingView motionPictureRating) {
         return MotionPictureRatingDto.builder()
-                .motionPictureId(motionPictureRating.getMotionPicture().getId())
+                .motionPictureId(motionPictureRating.getMotionPictureId())
                 .rating(motionPictureRating.getAverageScore())
                 .numberOfVotes(motionPictureRating.getNumberOfVotes())
                 .build();
