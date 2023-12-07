@@ -3,7 +3,6 @@ package ru.kslacker.reelrate.dto.motionpicture;
 import java.time.LocalDate;
 import java.util.List;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import ru.kslacker.reelrate.dataaccess.enums.Genre;
@@ -14,7 +13,6 @@ import ru.kslacker.reelrate.dataaccess.enums.MotionPictureType;
 public class SeriesCreateDto extends MotionPictureCreateDto {
     private final int season;
 
-    @Builder
     public SeriesCreateDto(
             MotionPictureType type,
             String title,
