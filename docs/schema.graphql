@@ -1,0 +1,240 @@
+#
+type ActingPersonRoleDto implements PersonRoleDto {
+  id: Long
+  motionPictureId: Long
+  personId: Long
+  role: String
+  type: PersonRoleType
+}
+
+#
+type CartoonDto implements MotionPictureDto {
+  cast: [ActingPersonRoleDto]
+  creators: [PersonRoleDto]
+  description: String
+  durationMinutes: Int
+  genres: [Genre]
+  id: Long
+  releaseDate: LocalDate
+  title: String
+  type: MotionPictureType
+}
+
+#
+enum Direction {
+  ASC
+  DESC
+}
+
+#
+enum Genre {
+  ACTION
+  COMEDY
+  DRAMA
+  FANTASY
+  HORROR
+  MYSTERY
+  ROMANCE
+  THRILLER
+  WESTERN
+}
+
+# Built-in scalar representing a local date
+scalar LocalDate
+
+# A 64-bit signed integer
+scalar Long
+
+#
+input MotionPictureCreateDtoInput {
+  description: String
+  durationMinutes: Int
+  genres: [Genre]
+  releaseDate: LocalDate
+  title: String
+  type: MotionPictureType
+}
+
+#
+interface MotionPictureDto {
+  cast: [ActingPersonRoleDto]
+  creators: [PersonRoleDto]
+  description: String
+  durationMinutes: Int
+  genres: [Genre]
+  id: Long
+  releaseDate: LocalDate
+  title: String
+  type: MotionPictureType
+}
+
+#
+input MotionPictureFiltersDtoInput {
+  genre: Genre
+  title: String
+  type: MotionPictureType
+}
+
+#
+type MotionPictureRatingDto {
+  motionPictureId: Long
+  numberOfVotes: Int
+  rating: Float
+}
+
+#
+enum MotionPictureType {
+  CARTOON
+  MOVIE
+  SERIES
+}
+
+#
+type MovieDto implements MotionPictureDto {
+  cast: [ActingPersonRoleDto]
+  creators: [PersonRoleDto]
+  description: String
+  durationMinutes: Int
+  genres: [Genre]
+  id: Long
+  releaseDate: LocalDate
+  title: String
+  type: MotionPictureType
+}
+
+# Mutation root
+type Mutation {
+  removeFromWatchLater(motionPictureId: Long): Boolean!
+  addMotionPicture(
+    motionPictureCreateDto: MotionPictureCreateDtoInput!
+  ): MotionPictureDto
+  rate(rating: RatingInput, motionPictureId: Long): UserRatingDto
+  userWatchLater: [MotionPictureDto]
+  addToWatchLater(motionPictureId: Long): Boolean!
+  deleteMotionPicture(motionPictureId: Long!): Boolean!
+}
+
+#
+enum NullHandling {
+  NATIVE
+  NULLS_FIRST
+  NULLS_LAST
+}
+
+#
+type Order {
+  direction: Direction
+  ignoreCase: Boolean
+  nullHandlingHint: NullHandling
+  property: String!
+}
+
+#
+type Page_MotionPictureDto {
+  content: [MotionPictureDto]
+  first: Boolean!
+  hasContent: Boolean!
+  hasNext: Boolean!
+  hasPrevious: Boolean!
+  last: Boolean!
+  nextOrLastPageable: Pagination
+  nextPageable: Pagination
+  number: Int!
+  numberOfElements: Int!
+  pageable: Pagination
+  previousOrFirstPageable: Pagination
+  previousPageable: Pagination
+  size: Int!
+  sort: Sorting
+  totalElements: Long!
+  totalPages: Int!
+}
+
+#
+type Pagination {
+  pageNumber: Int!
+  pageSize: Int
+  sort: Sort
+}
+
+#
+interface PersonRoleDto {
+  id: Long
+  motionPictureId: Long
+  personId: Long
+  type: PersonRoleType
+}
+
+#
+enum PersonRoleType {
+  ACTOR
+  CAMERAMAN
+  DIRECTOR
+  PRODUCER
+  SOUND_PRODUCER
+  VFX_ENGINEER
+}
+
+# Query root
+type Query {
+  reelRateUserById(id: UUID!): ReelRateUserDto
+  userRates: [UserRatingDto]
+  motionPictureById(id: Long!): MotionPictureDto
+  motionPictureRating(motionPictureId: Long!): MotionPictureRatingDto
+  motionPictures(
+    size: Int = 10
+    filterRequest: MotionPictureFiltersDtoInput = {}
+    page: Int = 0
+  ): Page_MotionPictureDto
+}
+
+#
+type Rating {
+  value: Int!
+}
+
+#
+input RatingInput {
+  value: Int!
+}
+
+#
+type ReelRateUserDto {
+  id: UUID
+  ratings: [UserRatingDto]
+  watchLater: [MotionPictureDto]
+}
+
+#
+type SeriesDto implements MotionPictureDto {
+  cast: [ActingPersonRoleDto]
+  creators: [PersonRoleDto]
+  description: String
+  durationMinutes: Int
+  genres: [Genre]
+  id: Long
+  releaseDate: LocalDate
+  season: Int!
+  title: String
+  type: MotionPictureType
+}
+
+#
+type Sort {
+  orders: [Order!]!
+}
+
+#
+type Sorting {
+  orders: [Order!]!
+}
+
+# UUID String
+scalar UUID
+
+#
+type UserRatingDto {
+  motionPictureId: Long
+  rating: Rating
+  reelRateUserId: UUID
+}
