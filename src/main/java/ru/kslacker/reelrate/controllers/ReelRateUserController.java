@@ -16,6 +16,8 @@ import ru.kslacker.reelrate.dto.motionpicture.MotionPictureDto;
 import ru.kslacker.reelrate.dto.reelrateuser.ReelRateUserDto;
 import ru.kslacker.reelrate.dto.reelrateuser.UserRatingDto;
 import ru.kslacker.reelrate.security.UserDetailsImpl;
+import ru.kslacker.reelrate.security.annotations.IsAdmin;
+import ru.kslacker.reelrate.security.annotations.IsUser;
 import ru.kslacker.reelrate.service.api.ReelRateUserService;
 
 @Controller
@@ -29,11 +31,13 @@ public class ReelRateUserController {
     }
 
     @GraphQLQuery
+    @IsAdmin
     public ReelRateUserDto reelRateUserById(@GraphQLArgument UUID id) {
         return reelRateUserService.getById(id);
     }
 
     @GraphQLMutation
+    @IsUser
     public UserRatingDto rate(
             @GraphQLArgument Long motionPictureId,
             @GraphQLArgument Rating rating) {
@@ -41,11 +45,13 @@ public class ReelRateUserController {
     }
 
     @GraphQLQuery
+    @IsUser
     public List<UserRatingDto> userRates() {
         return reelRateUserService.getRatings(getReelRateUserId());
     }
 
     @GraphQLMutation
+    @IsUser
     public List<MotionPictureDto> userWatchLater() {
         return reelRateUserService.getWatchLater(getReelRateUserId());
     }
