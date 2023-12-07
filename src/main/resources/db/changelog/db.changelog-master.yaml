@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/changelog/schema/init.xml
   - include:
       file: db/changelog/schema/accounts.xml
+  - include:
+      file: db/changelog/data/addAdmin.xml

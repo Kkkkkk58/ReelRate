@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.kslacker.reelrate.dataaccess.entities.ReelRateUser;
 import ru.kslacker.reelrate.dataaccess.entities.User;
+import ru.kslacker.reelrate.exceptions.ReelRateUserIsNotLinkedException;
 
 @RequiredArgsConstructor
 public class UserDetailsImpl implements UserDetails {
@@ -50,6 +51,10 @@ public class UserDetailsImpl implements UserDetails {
 
     public UUID getReelRateUserId() {
         ReelRateUser reelRateUser = user.getReelRateUser();
-        return (reelRateUser == null) ? null : reelRateUser.getId();
+        if (reelRateUser == null) {
+            throw new ReelRateUserIsNotLinkedException();
+        }
+
+        return reelRateUser.getId();
     }
 }

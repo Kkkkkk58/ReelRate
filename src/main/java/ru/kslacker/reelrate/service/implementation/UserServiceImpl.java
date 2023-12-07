@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void create(Credentials credentials) {
         create(credentials, Set.of(UserRole.USER));
     }
