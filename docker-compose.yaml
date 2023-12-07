@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: 'postgres:latest'
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=reelrate
+      - POSTGRES_PASSWORD=reelrate
+      - POSTGRES_USER=kslacker
+    ports:
+      - '5432:5432'
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus:/prometheus
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      monitoring:
+        aliases:
+          - prometheus
+
+
+  grafana:
+    image: grafana/grafana
+    build: "./config/grafana"
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    restart: unless-stopped
+    volumes:
+      - ./grafana:/var/lib/grafana
+    networks:
+      monitoring:
+        aliases:
+          - grafana
+
+
+networks:
+  monitoring:
+
