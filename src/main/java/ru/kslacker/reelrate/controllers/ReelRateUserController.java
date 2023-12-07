@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
+import io.leangen.graphql.annotations.GraphQLNonNull;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,7 +33,7 @@ public class ReelRateUserController {
 
     @GraphQLQuery
     @IsAdmin
-    public ReelRateUserDto reelRateUserById(@GraphQLArgument UUID id) {
+    public ReelRateUserDto reelRateUserById(@GraphQLNonNull UUID id) {
         return reelRateUserService.getById(id);
     }
 
@@ -54,6 +55,18 @@ public class ReelRateUserController {
     @IsUser
     public List<MotionPictureDto> userWatchLater() {
         return reelRateUserService.getWatchLater(getReelRateUserId());
+    }
+
+    @GraphQLMutation
+    @IsUser
+    public void addToWatchLater(Long motionPictureId) {
+        reelRateUserService.addToWatchLater(getReelRateUserId(), motionPictureId);
+    }
+
+    @GraphQLMutation
+    @IsUser
+    public void removeFromWatchLater(Long motionPictureId) {
+        reelRateUserService.removeFromWatchLater(getReelRateUserId(), motionPictureId);
     }
 
     private UUID getReelRateUserId() {

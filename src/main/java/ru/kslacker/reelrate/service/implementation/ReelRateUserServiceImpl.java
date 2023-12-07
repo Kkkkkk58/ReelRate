@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kslacker.reelrate.dataaccess.entities.MotionPicture;
 import ru.kslacker.reelrate.dataaccess.entities.ReelRateUser;
 import ru.kslacker.reelrate.dataaccess.entities.UserRating;
 import ru.kslacker.reelrate.dataaccess.models.Rating;
@@ -38,9 +39,7 @@ public class ReelRateUserServiceImpl implements ReelRateUserService {
 
     @Override
     public ReelRateUserDto getById(UUID userId) {
-        ReelRateUser user = reelRateUserRepository
-                .findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException(userId));
+        ReelRateUser user = getUserInternal(userId);
 
         return ReelRateUserMapper.map(user);
     }
@@ -72,5 +71,34 @@ public class ReelRateUserServiceImpl implements ReelRateUserService {
     @Override
     public List<MotionPictureDto> getWatchLater(UUID userId) {
         return getById(userId).watchLater();
+    }
+
+    @Override
+    @Transactional
+    public void addToWatchLater(UUID userId, Long motionPictureId) {
+        ReelRateUser user = getUserInternal(userId);
+        MotionPicture motionPicture = motionPictureRepository
+                .findById(motionPictureId)
+                .orElseThrow(() -> new EntityNotFoundException(motionPictureId));
+
+        user.getWatchLater().add(motionPicture);
+        reelRateUserRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public void removeFromWatchLater(UUID userId, Long motionPictureId) {
+        ReelRateUser user = getUserInternal(userId);
+        MotionPicture motionPicture = motionPictureRepository
+                .findById(motionPictureId)
+                .orElseThrow(() -> new EntityNotFoundException(motionPictureId));
+
+        user.getWatchLater().remove(motionPicture);
+        reelRateUserRepository.saveAndFlush(user);
+    }
+
+    private ReelRateUser getUserInternal(UUID userId) {
+        return reelRateUserRepository
+                .findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(userId));
     }
 }

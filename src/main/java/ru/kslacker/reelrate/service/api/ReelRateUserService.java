@@ -13,4 +13,6 @@ public interface ReelRateUserService {
     UserRatingDto rate(UUID userId, Long motionPictureId, Rating rating);
     List<UserRatingDto> getRatings(UUID userId);
     List<MotionPictureDto> getWatchLater(UUID userId);
+    void addToWatchLater(UUID userId, Long motionPictureId);
+    void removeFromWatchLater(UUID reelRateUserId, Long motionPictureId);
 }

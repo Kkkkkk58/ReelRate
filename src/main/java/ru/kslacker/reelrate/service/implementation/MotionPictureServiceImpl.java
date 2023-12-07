@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kslacker.reelrate.dataaccess.entities.MotionPicture;
 import ru.kslacker.reelrate.dataaccess.repositories.MotionPictureRepository;
+import ru.kslacker.reelrate.dto.motionpicture.MotionPictureCreateDto;
 import ru.kslacker.reelrate.dto.motionpicture.MotionPictureDto;
 import ru.kslacker.reelrate.exceptions.EntityNotFoundException;
 import ru.kslacker.reelrate.service.api.DtoMappingMotionPictureVisitor;
@@ -30,5 +31,15 @@ public class MotionPictureServiceImpl implements MotionPictureService {
         visitor.clear();
 
         return motionPictureDto;
+    }
+
+    @Override
+    public MotionPictureDto addMotionPicture(MotionPictureCreateDto motionPictureCreateDto) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(Long motionPictureId) {
+        motionPictureRepository.deleteById(motionPictureId);
     }
 }
