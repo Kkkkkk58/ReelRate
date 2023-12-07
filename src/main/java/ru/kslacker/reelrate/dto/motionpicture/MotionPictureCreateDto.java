@@ -11,8 +11,6 @@ import lombok.Getter;
 import lombok.ToString;
 import ru.kslacker.reelrate.dataaccess.enums.Genre;
 import ru.kslacker.reelrate.dataaccess.enums.MotionPictureType;
-import ru.kslacker.reelrate.dto.personrole.ActingPersonRoleCreateDto;
-import ru.kslacker.reelrate.dto.personrole.PersonRoleCreateDto;
 
 @Getter
 @ToString
@@ -24,8 +22,6 @@ public class MotionPictureCreateDto {
     private final String title;
     private final String description;
     private final List<Genre> genres;
-    private final List<PersonRoleCreateDto> creators;
-    private final List<ActingPersonRoleCreateDto> cast;
     private final Integer durationMinutes;
     private final LocalDate releaseDate;
 }
